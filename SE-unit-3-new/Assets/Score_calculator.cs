@@ -31,10 +31,10 @@ public class Score_calculator : MonoBehaviour
     {
         if(ball[0].transform.position.z > 6){
             Vector3 vel = rb.velocity;
-            while(vel == Vector3.zero){
+            //while(vel == Vector3.zero){
                 countPinsDown();
                 reset_pins();
-            }
+            //}
         }
     }
 
