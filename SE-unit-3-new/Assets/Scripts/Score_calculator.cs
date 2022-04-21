@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
+using System;
 public class Score_calculator : MonoBehaviour
 {
     int score = 0;
@@ -12,25 +13,33 @@ public class Score_calculator : MonoBehaviour
     float rotation_reset_speed = 1.0f;
     public Transform pin_transform;
     public Rigidbody rb;
+	
+	public Text total_score;
+	int ts = 0;
+	public Text[] sc;
+	public Text chances_left;
+	int k = 1;
+
     // Start is called before the first frame update
     void Start(){
-
         rb = GetComponent<Rigidbody>();
         ball = GameObject.FindGameObjectsWithTag("ball");
         pins = GameObject.FindGameObjectsWithTag("Pins");
         ball_position = ball[0].transform.position;
         pin_positions = new Vector3[pins.Length];
+	  sc = new Text[10];
         for(int i=0;i<pins.Length;i++){
             pin_positions[i] = pins[i].transform.position;
         }
         pin_transform = pins[0].transform;
+	  
     }
 
     // Update is called once per frame
     void Update()
     {
         if(ball[0].transform.position.z > 6){
-            Vector3 vel = rb.velocity;
+            //Vector3 vel = rb.velocity;
             //while(vel == Vector3.zero){
                 countPinsDown();
                 reset_pins();
@@ -49,7 +58,13 @@ public class Score_calculator : MonoBehaviour
                 pins[i].SetActive(false);
             }
             Debug.Log(score);
+		sc[k].text = score.ToString();
+		ts = ts + score;
+		total_score.text = ts.ToString();
+		int diff = 11 - k;
+	  	chances_left.text = diff.ToString();
             score = 0;
+		k++;
         }
     }
 

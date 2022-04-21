@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Pins
   - ball
+  - scorevalue
   layers:
   - Default
   - TransparentFX
