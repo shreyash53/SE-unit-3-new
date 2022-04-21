@@ -29,7 +29,7 @@ public class Score_calculator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(ball[0].transform.position.z > -0.3){
+        if(ball[0].transform.position.z > 6){
             Vector3 vel = rb.velocity;
             while(vel == Vector3.zero){
                 countPinsDown();
