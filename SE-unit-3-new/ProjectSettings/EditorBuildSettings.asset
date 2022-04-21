@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/MainMenu.unity
     guid: b611aadeba86c6443a620dea9a219e21
+  - enabled: 1
+    path: Assets/Scenes/BowlingAlley.unity
+    guid: 7c9ea8fc3186f6249acc7af096643a8f
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 6c05b3157258bc047a3a69ae6b78af3f, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 097c7897808a4ab478658734ff811527, type: 2}
