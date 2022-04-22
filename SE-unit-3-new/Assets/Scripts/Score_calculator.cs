@@ -34,13 +34,15 @@ public class Score_calculator : MonoBehaviour
 	int k = 1;
     // int t = 1;
     bool flag = false;
-
+    public bool sound_flag;
     // Start is called before the first frame update
     void Start(){
         k = 1;
+        sound_flag = true;
         PlayerScore = Application.persistentDataPath + "/PlayerScore.txt";
         ts = 0;
         rb = GetComponent<Rigidbody>();
+        // rb.maxAngularVelocity = 20;
         ball = GameObject.FindGameObjectsWithTag("ball");
         pins = GameObject.FindGameObjectsWithTag("Pins");
         ball_position = ball[0].transform.position;
@@ -69,23 +71,33 @@ public class Score_calculator : MonoBehaviour
             // countPinsDown();
             //}
         }
+
+        if(! (ball[0].transform.position.x < 1.5 && ball[0].transform.position.x > -1.5) ){
+            Debug.Log("Ball Out!");
+        }
     }
 
     public void OnTriggerEnter(Collider other){//IEnumerator
+        Debug.Log("Hitting:" + other.gameObject.tag);
         if(other.gameObject.tag == "collider"){
             // if(ball[0].transform.position.z >= 6.5){ 
             StartCoroutine(wait_function());  
             // }
         }
+        // if(other.gameObject.tag == "Pins" && sound_flag){
+        //     AudioSource src = GetComponent<AudioSource>();
+        //     src.Play();
+        //     sound_flag = false;
+        // }
     }
 
     public IEnumerator wait_function()
     {
-        Debug.Log("Started Coroutine at timestamp : " + Time.time);
+        // Debug.Log("Started Coroutine at timestamp : " + Time.time);
 
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(10);
 
-        Debug.Log("Finished Coroutine at timestamp : " + Time.time);
+        // Debug.Log("Finished Coroutine at timestamp : " + Time.time);
         countPinsDown();
     }
     void countPinsDown(){
@@ -106,7 +118,6 @@ public class Score_calculator : MonoBehaviour
             score_array[k/2] = score;
             ts = ts + score;
             total_score.text = ts.ToString();
-
             reset_ball();
             //flag = false;
 
@@ -117,7 +128,6 @@ public class Score_calculator : MonoBehaviour
             sc[(k/2)-1].text = score_array[k/2].ToString();
             ts = ts + score;
             total_score.text = ts.ToString();
-
             reset_ball();
             reset_pins();
             //flag = false;
@@ -164,14 +174,16 @@ public class Score_calculator : MonoBehaviour
             pins[i].GetComponent<Rigidbody>().velocity=Vector3.zero;
             pins[i].GetComponent<Rigidbody>().angularVelocity=Vector3.zero;
             pins[i].transform.rotation = Quaternion.Slerp(pins[i].transform.rotation, pin_transform.rotation, Time.time * rotation_reset_speed);
+            
         }
     }
 
     void reset_ball(){
+        sound_flag = true;
         ball[0].transform.position = ball_position;
+        ball[0].transform.rotation = Quaternion.identity;
         ball[0].GetComponent<Rigidbody>().velocity = Vector3.zero;
         ball[0].GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
-        ball[0].transform.rotation = Quaternion.identity;
     }
 
 }
