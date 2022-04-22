@@ -9,7 +9,7 @@ public class mainMenuControl : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
-    public void ResetGame(){
+    public void ShowHiScore(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 3);
     }
 

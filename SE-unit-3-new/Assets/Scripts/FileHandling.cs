@@ -30,7 +30,7 @@ public class FileHandling : MonoBehaviour
                 
                 var jsonString = File.ReadAllText(PlayerScore);
                 // var hitCount = JsonUtility.FromJson<HitCount>(jsonString);
-                score_debug1.text = "file exists";
+                // score_debug1.text = "file exists";
                 score_debug2.text = jsonString;
             }
             else{
