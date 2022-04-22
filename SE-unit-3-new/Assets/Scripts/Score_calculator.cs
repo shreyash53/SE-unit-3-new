@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class Score_calculator : MonoBehaviour
 {
@@ -27,6 +28,8 @@ public class Score_calculator : MonoBehaviour
 	int ts = 0;
     public static int final_score;
 
+    private string PlayerScore;
+
 	public Text chances_left;
 	int k = 1;
     // int t = 1;
@@ -35,6 +38,7 @@ public class Score_calculator : MonoBehaviour
     // Start is called before the first frame update
     void Start(){
         k = 1;
+        PlayerScore = Application.persistentDataPath + "/PlayerScore.txt";
         ts = 0;
         rb = GetComponent<Rigidbody>();
         ball = GameObject.FindGameObjectsWithTag("ball");
@@ -132,13 +136,23 @@ public class Score_calculator : MonoBehaviour
 		k++;
 
         if(k==21){
-            exit_prompt(ts);
+            addScore(ts);
+            exit_prompt();
         }
         // flag = false;
     }
 
-    void exit_prompt(int total_score){
-        final_score = total_score;
+    void addScore(int total_score){
+        if (File.Exists(PlayerScore)){
+            using (StreamWriter writer = new StreamWriter(new FileStream(PlayerScore, FileMode.Append)))  
+            {  
+               writer.WriteLine(total_score);
+            }  
+        }
+    }
+
+
+    void exit_prompt(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1 );
     }
 
