@@ -143,12 +143,12 @@ public class Score_calculator : MonoBehaviour
     }
 
     void addScore(int total_score){
-        if (File.Exists(PlayerScore)){
+        // if (File.Exists(PlayerScore)){
             using (StreamWriter writer = new StreamWriter(new FileStream(PlayerScore, FileMode.Append)))  
             {  
                writer.WriteLine(total_score);
             }  
-        }
+        // }
     }
 
 

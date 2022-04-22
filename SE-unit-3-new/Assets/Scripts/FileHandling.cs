@@ -18,26 +18,26 @@ public class FileHandling : MonoBehaviour
     {
         Debug.Log(Application.persistentDataPath);
         PlayerScore = Application.persistentDataPath + "/PlayerScore.txt";
-        
+        scoreDisplay();
     }
 
     // Update is called once per frame
     void Update()
     {
         // if(flag){
-            if (File.Exists(PlayerScore))
-            {
+            // if (File.Exists(PlayerScore))
+            // {
                 
-                var jsonString = File.ReadAllText(PlayerScore);
-                // var hitCount = JsonUtility.FromJson<HitCount>(jsonString);
-                // score_debug1.text = "file exists";
-                score_debug2.text = jsonString;
-            }
-            else{
-                score_debug1.text = "file does not exists";
+            //     var jsonString = File.ReadAllText(PlayerScore);
+            //     // var hitCount = JsonUtility.FromJson<HitCount>(jsonString);
+            //     // score_debug1.text = "file exists";
+            //     score_debug2.text = jsonString;
+            // }
+            // else{
+            //     score_debug1.text = "file does not exists";
 
-                File.WriteAllText(PlayerScore, "something other");
-            }
+            //     File.WriteAllText(PlayerScore, "something other");
+            // }
         // }
     }
 
@@ -53,11 +53,15 @@ public class FileHandling : MonoBehaviour
                     int[] nums = Array.ConvertAll(floats, int.Parse);
                     Array.Sort(nums);
                     // floats = Array.ConvertAll(nums, Convert.ToString);
-                    for(int i=0; i<9; i++){
+                    for(int i=0; i<nums.Length; i++){
                         scores[i].text = nums[i].ToString();
                     }
                 }
             }  
+        }
+        else{
+            File.WriteLine(PlayerScore, " ");
+            score_debug1.text = "No scores saved";
         }
     }  
         
