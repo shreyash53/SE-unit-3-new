@@ -7,6 +7,7 @@ TagManager:
   - Pins
   - ball
   - scorevalue
+  - collider
   layers:
   - Default
   - TransparentFX
