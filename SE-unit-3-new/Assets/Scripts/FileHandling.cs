@@ -62,7 +62,7 @@ public class FileHandling : MonoBehaviour
         else{
             using (StreamWriter writer = new StreamWriter(new FileStream(PlayerScore, FileMode.Create)))  
             {  
-               writer.WriteLine(total_score);
+               writer.WriteLine("");
             } 
             score_debug1.text = "No scores saved";
         }
