@@ -6,14 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: d1c3109bdb54ad54c8a2b2838528e640
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: b611aadeba86c6443a620dea9a219e21
   - enabled: 1
     path: Assets/Scenes/BowlingAlley.unity
     guid: 7c9ea8fc3186f6249acc7af096643a8f
+  - enabled: 1
+    path: Assets/Scenes/EndPromt.unity
+    guid: 2789a4b6b060fa042af910f08c2ed5d5
   - enabled: 1
     path: Assets/Scenes/HighScore.unity
     guid: eb8fd06a6a8389344a16ccbe619c2c0a
