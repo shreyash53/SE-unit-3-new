@@ -27,5 +27,4 @@ ExportedObj/
 *.VC.db
 
 # Builds
-*.apk
 *.unitypackage
