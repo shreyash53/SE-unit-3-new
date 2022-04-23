@@ -34,6 +34,7 @@ public class Score_calculator : MonoBehaviour
 	int k = 1;
     // int t = 1;
     bool flag = false;
+    bool pinsFellDebugFlag;
 
     // Start is called before the first frame update
     void Start(){
@@ -45,6 +46,7 @@ public class Score_calculator : MonoBehaviour
         pins = GameObject.FindGameObjectsWithTag("Pins");
         ball_position = ball[0].transform.position;
         pin_positions = new Vector3[pins.Length];
+        Debug.Log("Storing pin initial position");
         for(int i=0;i<pins.Length;i++){
             pin_positions[i] = pins[i].transform.position;
         }
@@ -53,7 +55,8 @@ public class Score_calculator : MonoBehaviour
         throw1 = new int[10]; 
         throw2 = new int[10];
         score_array = new int[10];  
-
+        // reset_pins();
+        pinsFellDebugFlag = true;
     }
 
     // Update is called once per frame
@@ -72,8 +75,10 @@ public class Score_calculator : MonoBehaviour
     }
 
     public void OnTriggerEnter(Collider other){//IEnumerator
-        if(other.gameObject.tag == "collider"){
+        if(other.gameObject.tag == "collider" && pinsFellDebugFlag){
             // if(ball[0].transform.position.z >= 6.5){ 
+            Debug.Log("in collider trigger");
+            pinsFellDebugFlag = false;
             StartCoroutine(wait_function());  
             // }
         }
@@ -87,8 +92,11 @@ public class Score_calculator : MonoBehaviour
 
         Debug.Log("Finished Coroutine at timestamp : " + Time.time);
         countPinsDown();
+        pinsFellDebugFlag = true;
     }
     void countPinsDown(){
+        score = 0;
+        
         for(int i=0;i<pins.Length;i++){
             float z = pins[i].transform.eulerAngles.z;
             float x = pins[i].transform.eulerAngles.x; 
@@ -114,7 +122,7 @@ public class Score_calculator : MonoBehaviour
             t2[(k/2)-1].text = score.ToString();
             throw2[(k/2)-1] = score;
             score_array[(k/2)-1] += score;
-            sc[(k/2)-1].text = score_array[k/2].ToString();
+            sc[(k/2)-1].text = score_array[k/2 -1].ToString();
             ts = ts + score;
             total_score.text = ts.ToString();
 
@@ -128,11 +136,13 @@ public class Score_calculator : MonoBehaviour
 	  	chances_left.text = diff.ToString();
 
         if(score==10){
-            if(k%2==1)
+            if(k%2==1){
                 k++;
+                reset_pins();
+            }
         }
 
-        score = 0;
+        // score = 0;
 		k++;
 
         if(k==21){
@@ -160,10 +170,11 @@ public class Score_calculator : MonoBehaviour
         Debug.Log("Pins reset function");
         for(int i=0;i<pins.Length;i++){
             pins[i].SetActive(true);
-            pins[i].transform.position = pin_positions[i];
+            pins[i].transform.rotation = Quaternion.Euler (0, 0, 270f);
+            // pins[i].transform.rotation = Quaternion.Slerp(pins[i].transform.rotation, pin_transform.rotation, Time.time * rotation_reset_speed);
             pins[i].GetComponent<Rigidbody>().velocity=Vector3.zero;
             pins[i].GetComponent<Rigidbody>().angularVelocity=Vector3.zero;
-            pins[i].transform.rotation = Quaternion.Slerp(pins[i].transform.rotation, pin_transform.rotation, Time.time * rotation_reset_speed);
+            pins[i].transform.position = pin_positions[i];
         }
     }
 

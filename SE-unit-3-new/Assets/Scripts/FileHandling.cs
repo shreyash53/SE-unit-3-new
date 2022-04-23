@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using System.IO;
 using System;
+using UnityEngine.SceneManagement;
 
 public class FileHandling : MonoBehaviour
 {
@@ -43,21 +44,53 @@ public class FileHandling : MonoBehaviour
 
     void scoreDisplay(){
         if (File.Exists(PlayerScore)){
-            using (StreamReader reader = new StreamReader(new FileStream(PlayerScore, FileMode.Open)))  
-            {  
-                string line;  
-                // Read line by line  
-                while ((line = reader.ReadLine()) != null)  
-                {  
-                    string[] floats = line.Split(" "[0]);
-                    int[] nums = Array.ConvertAll(floats, int.Parse);
-                    Array.Sort(nums);
-                    // floats = Array.ConvertAll(nums, Convert.ToString);
-                    for(int i=0; i<nums.Length; i++){
-                        scores[i].text = nums[i].ToString();
-                    }
+            // using (StreamReader reader = new StreamReader(new FileStream(PlayerScore, FileMode.Open)))  
+            // {  
+            //     string line;  
+            //     // Read line by line  
+            //     while ((line = reader.ReadLine()) != null)  
+            //     {  
+            //         string[] floats = line.Split(" "[0]);
+            //         Debug.Log(floats.Length);
+            //         if(floats.Length > 0){
+            //             int[] nums = Array.ConvertAll(floats, int.Parse);
+            //             Array.Sort(nums);
+            //             // floats = Array.ConvertAll(nums, Convert.ToString);
+            //             int i;
+            //             for(i=0; i<=9; i++){
+            //                 scores[i].text = (i+1).ToString() + ".  ";
+            //                 if(i < nums.Length)
+            //                     scores[i].text += nums[i].ToString();
+            //             }
+            //         }
+            //         else{
+            //             for(i=0; i<=9; i++){
+            //                 scores[i].text = "";
+            //             }
+            //             score_debug1.text = "No scores saved";
+            //         }
+            //     }
+            // }  
+            string[] lines = File.ReadAllLines(PlayerScore);
+            if(lines.Length > 0){
+                int[] nums = Array.ConvertAll(lines, int.Parse);
+                Array.Sort(nums);
+                Array.Reverse(nums);
+                // floats = Array.ConvertAll(nums, Convert.ToString);
+                int i;
+                for(i=0; i<=9; i++){
+                    scores[i].text = (i+1).ToString() + ".  ";
+                    if(i < nums.Length)
+                        scores[i].text += nums[i].ToString();
                 }
-            }  
+            }
+            else{
+                for(int i=0; i<=9; i++){
+                    scores[i].text = "";
+                }
+                score_debug1.text = "No scores saved";
+            }
+            
         }
         else{
             using (StreamWriter writer = new StreamWriter(new FileStream(PlayerScore, FileMode.Create)))  
@@ -68,5 +101,12 @@ public class FileHandling : MonoBehaviour
         }
     }  
         
-        
+    public void GetMainMenu(){
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex -3 );
+    }
+
+    public void ResetScore(){
+        File.WriteAllText(PlayerScore, "");
+        scoreDisplay();
+    }
 }
